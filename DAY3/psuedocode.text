@@ -1,0 +1,20 @@
+
+
+
+
+
+
+s = ""
+current string we're looking at 
+
+iterate over each character of input
+
+check if s has mul( in it
+if it does have mul check if mul exists twice
+if it does go to the second one, then take the numbers, make them into an array and add the total
+
+if it doesnt have two just do the end of the one before
+
+if it has do() turn on to true vice versa if it doesnt and reset s
+
+if s doesnt start wiht mul or do or dont just reset it and keep going

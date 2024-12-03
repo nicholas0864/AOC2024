@@ -22,9 +22,9 @@ while i < len(content):
         i+=1
 
 s = ""
-on = None
-
-
+on = True
+mult = None
+right = None
 usableForMult = '1234567890'
 
 total = 0
@@ -32,30 +32,36 @@ total = 0
 
 #first version
 
-for c in range(len(content)):
+for c in content:
+    print(s)
+    if s == 'mul(' and on: 
+        mult = True
+        print("Mul( Check" + s)
+        s = ""
 
-    if s == 'mul(' and on: #if the current part has mul( and do is on take the part from mul to next paranthesis, check if its valid, then do the operation
-        newPart = content[c:content[c:].find(')')]
-        matches = re.findall(re.escape('mul('), newPart)
-        if len(matches) >= 2:
-            newPart= newPart[newPart.find('mul',(newPart.find('mul')+1))+4:newPart.find(")")]
-            newArray = newPart.split(",", 1)
-            total += int(newArray[0]) * int(newArray[1])
-        is_valid = all(char in usableForMult for char in newPart)
-        if is_valid:
-            newArray = newPart.split(",", 1)
-            total += newArray[0] * newArray[1]
-
-            
+    if c == ',' and mult:
+        left = s
+        print(", Check Check" + s)
+        s= ""
+        right = True
+    if right and c == ")":
+        total += int(s) * int(left)
+        print(") Check" + s)
+        s = ""
+        right = False
+        mult = False        
+    
     elif s == 'do()':
         on = True
+        print("Do Check" + s)
         s = ""
     elif s == 'don\'t()':
         on = False
+        print("Don't Check" + s)
         s = ""
-    if ( not s.startswith("mul("[:len(s)]) or not s.startswith("do()"[:len(s)]) or not s.startswith("don't()"[:len(s)])):
-        s = ""
-    s += content[c]
+    # if ( not s.startswith("mul("[:len(s)]) or not s.startswith("do()"[:len(s)]) or not s.startswith("don't()"[:len(s)])):
+    #     s = ""
+    s += c
 
 print(total)
     
